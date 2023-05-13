@@ -1,9 +1,45 @@
-﻿@page "/"
+@inject IMediator Mediator
 
-<PageTitle>Index</PageTitle>
+@page "/"
+@using MediatR
+@using SMDb.Application.Songs.Requests
+@using SMDb.Domain
 
-<h1>Hello, world!</h1>
+<MudStack AlignItems="AlignItems.Stretch" Justify="Justify.Center" Style="height: 100vh;">
+    <MudContainer>
+        <MudText Class="pointer-events-none" Align="Align.Center" Typo="Typo.h3" GutterBottom="true">SMDb</MudText>
+        @*<MudTextField Class="mt-16" Mask="@(new PatternMask("********-****-****-****-************"))"
+                      Error="@(SessionInValid)" @bind-Value="SessionId" Label="Session Id"
+                      Variant="Variant.Outlined"></MudTextField>*@
 
-Welcome to your new app.
+        <MudCheckBox @bind-Checked="@Label_CheckBox1" Label="Default"></MudCheckBox>
+        <MudCheckBox @bind-Checked="@Label_CheckBox2" Label="Primary" Color="Color.Primary"></MudCheckBox>
+        <MudCheckBox @bind-Checked="@Label_CheckBox3" Label="Secondary" LabelPosition="LabelPosition.Start" Color="Color.Secondary"></MudCheckBox>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+        <div Class="d-flex justify-center mt-4">
+            <MudIconButton OnClick="GetSongs" Icon="@Icons.Material.Filled.Search" Color="Color.Primary"/>
+        </div>
+    </MudContainer>
+</MudStack>
+
+
+@code
+{
+    List<Song> _songs = new List<Song>();
+
+    public bool Label_CheckBox1 { get; set; } = true;
+    public bool Label_CheckBox2 { get; set; } = false;
+    public bool Label_CheckBox3 { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _songs = await Mediator.Send(new GetSongsQuery());
+
+        await base.OnInitializedAsync();
+    }
+
+    private void GetSongs()
+    {
+        throw new NotImplementedException();
+    }
+}
