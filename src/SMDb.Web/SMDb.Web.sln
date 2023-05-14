@@ -1,0 +1,25 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMDb.Web", "SMDb.Web.csproj", "{115FD8B9-14DA-45FD-B293-A2DEB11CB184}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{115FD8B9-14DA-45FD-B293-A2DEB11CB184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{115FD8B9-14DA-45FD-B293-A2DEB11CB184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{115FD8B9-14DA-45FD-B293-A2DEB11CB184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{115FD8B9-14DA-45FD-B293-A2DEB11CB184}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B77A42E-E0E4-4930-A59C-80C4A4E13CC9}
+	EndGlobalSection
+EndGlobal

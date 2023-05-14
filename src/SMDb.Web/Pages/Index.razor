@@ -1,0 +1,62 @@
+@inject IMediator Mediator
+
+@page "/"
+@using MediatR
+@using SMDb.Application.Genres.Requests
+@using SMDb.Application.Songs.Requests
+@using SMDb.Domain
+@using SMDb.Domain.Songs
+
+<MudContainer>
+    <MudText Class="pointer-events-none" Align="Align.Center" Typo="Typo.h3" GutterBottom="true">SMDb</MudText>
+
+    <MudStack Row="true" Justify="Justify.Center">
+        @foreach (GenreSelectionVM? g in _genres)
+        {
+            <MudCheckBox @bind-Checked="@g.IsSelected" Label="@g.Name"></MudCheckBox>
+        }
+    </MudStack>
+
+    <div Class="d-flex justify-center mt-4">
+        <MudStack>
+            @foreach (Song song in _displayedSongs)
+            {
+                <MudCard Elevation="0" Style="Width: 400px;">
+                    <MudCardContent>
+                        <MudText>@song.Name - @song.Artist.Name</MudText>
+                        <MudText>@song.Genre.Name</MudText>
+                    </MudCardContent>
+                </MudCard>
+            }
+        </MudStack>
+    </div>
+</MudContainer>
+
+
+@code
+{
+    List<Song> _songs = new List<Song>();
+    private List<GenreSelectionVM> _genres = new List<GenreSelectionVM>();
+    private IEnumerable<string> _selectedGenres => _genres.Where(m => m.IsSelected).Select(m => m.Name);
+    private IEnumerable<Song> _displayedSongs => _selectedGenres.Any() ? _songs.Where(m => _selectedGenres.Contains(m.Genre.Name)) : _songs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _songs = await Mediator.Send(new GetSongsQuery());
+        _genres = (await Mediator.Send(new GetValidGenresRequest())).ConvertAll(m => new GenreSelectionVM(m));
+
+        await base.OnInitializedAsync();
+    }
+
+    public class GenreSelectionVM
+    {
+        public Genre Genre { get; }
+        public string Name => Genre.Name;
+        public bool IsSelected { get; set; }
+
+        public GenreSelectionVM(Genre genre)
+        {
+            Genre = genre;
+        }
+    }
+}
